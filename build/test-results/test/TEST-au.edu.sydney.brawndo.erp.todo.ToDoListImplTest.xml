@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2023-03-22T06:41:50" hostname="Daniels-MBP.modem" time="0.013">
+  <properties/>
+  <testcase name="testAddNonNullIDWhenManagingIDs()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testFindAllAllFiltersNullValues()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testFindAllCompleted()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testFindAllEmpty()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testFindAllValid()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testFindOne()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.001"/>
+  <testcase name="testClear()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.001"/>
+  <testcase name="testAddDuplicateID()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testFindAllDateTimeFilterInvalidDates()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testRemoveValidID()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testAddLargeLocation()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.001"/>
+  <testcase name="testAddNullDateTime()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testAddNullLocation()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testAddValid()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testFindAllAllFiltersAndSearches()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.001"/>
+  <testcase name="testFindAllDateTimeFilter()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testRemoveInvalidID()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.001"/>
+  <testcase name="testAddNullIDWhenNotManagingIDs()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testAddValidMultipleManagingIDs()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.001"/>
+  <testcase name="testAddValidMultipleNotManagingIDs()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testFindAllDateTimeFilterNullDates()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.001"/>
+  <testcase name="testFindAllAllFiltersOrSearches()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.0"/>
+  <testcase name="testAddEmptyLocation()" classname="au.edu.sydney.brawndo.erp.todo.ToDoListImplTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

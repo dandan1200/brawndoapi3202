@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Workspace</a> &gt; <a href="index.source.html" class="el_package">au.edu.sydney.brawndo.erp.todo</a> &gt; <span class="el_source">TaskImpl.java</span></div><h1>TaskImpl.java</h1><pre class="source lang-java linenums">package au.edu.sydney.brawndo.erp.todo;
+
+import au.edu.sydney.brawndo.erp.todo.Task;
+
+import java.time.LocalDateTime;
+
+public class TaskImpl implements Task {
+
+    private int id;
+    private LocalDateTime dateTime;
+    private String location;
+    private String description;
+    private boolean completed;
+<span class="fc" id="L14">    public TaskImpl(int id, LocalDateTime dateTime, String location, String description) {</span>
+<span class="fc" id="L15">        this.id = id;</span>
+<span class="fc" id="L16">        this.setDateTime(dateTime);</span>
+<span class="fc" id="L17">        this.setLocation(location);</span>
+<span class="fc" id="L18">        this.setDescription(description);</span>
+<span class="fc" id="L19">        this.completed = false;</span>
+
+<span class="fc" id="L21">    }</span>
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @return The id of this task
+     */
+    public int getID() {
+<span class="fc" id="L32">        return this.id;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @return The datetime of this task (may not be null)
+     */
+    public LocalDateTime getDateTime() {
+<span class="fc" id="L44">        return this.dateTime;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @return The location of this task (may not be null, empty, and must be 256 characters or less)
+     */
+    public String getLocation() {
+<span class="fc" id="L56">        return this.location;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @return The description of this task if present, otherwise null
+     */
+    public String getDescription() {
+<span class="fc" id="L68">        return this.description;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @return The completion status of this task
+     */
+    public boolean isCompleted() {
+<span class="fc" id="L80">        return this.completed;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * The new datetime should be returned from any future calls to this Task’s getDateTime method&lt;br&gt;
+     *
+     * @param dateTime May not be null
+     * @throws IllegalArgumentException If the preconditions are violated
+     */
+    public void setDateTime(LocalDateTime dateTime) throws IllegalArgumentException {
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (dateTime == null) {</span>
+<span class="fc" id="L94">            throw new IllegalArgumentException(&quot;Datetime cannot be null.&quot;);</span>
+        } else {
+<span class="fc" id="L96">            this.dateTime = dateTime;</span>
+        }
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * The new location should be returned from any future calls to this Task’s getLocation method&lt;br&gt;
+     *
+     * @param location May not be null or empty, must be 256 characters or less
+     * @throws IllegalArgumentException If the preconditions are violated
+     */
+    public void setLocation(String location) throws IllegalArgumentException {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (location == null) {</span>
+<span class="fc" id="L111">            throw new IllegalArgumentException(&quot;Location cannot be null.&quot;);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        } else if (location.equals(&quot;&quot;)){</span>
+<span class="fc" id="L113">            throw new IllegalArgumentException(&quot;Location cannot be empty.&quot;);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        } else if (location.length() &gt; 256) {</span>
+<span class="fc" id="L115">            throw new IllegalArgumentException(&quot;Location cannot be greater than 256 characters.&quot;);</span>
+        } else {
+<span class="fc" id="L117">            this.location = location;</span>
+        }
+<span class="fc" id="L119">    }</span>
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * The new description (or null if set) should be returned from any future calls to this Task’s getDescription method&lt;br&gt;
+     *
+     * @param description May be null
+     */
+    public void setDescription(String description) {
+<span class="fc" id="L130">        this.description = description;</span>
+<span class="fc" id="L131">    }</span>
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * The task will be set to completed and will reflect this in isComplete()&lt;br&gt;
+     *
+     * @throws IllegalStateException If this task was already complete
+     */
+    public void complete() throws IllegalStateException {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (this.completed) {</span>
+<span class="fc" id="L143">            throw new IllegalStateException(&quot;Task is already completed.&quot;);</span>
+        } else {
+<span class="fc" id="L145">            this.completed = true;</span>
+        }
+<span class="fc" id="L147">    }</span>
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @param field A mapping to a field stored by this Task (may not be null)
+     * @return The string contents of the field mapped by the parameter (with inherited postconditions)
+     * @throws IllegalArgumentException If the preconditions are violated
+     */
+    public String getField(Field field) throws IllegalArgumentException {
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (field == Field.DESCRIPTION) {</span>
+<span class="fc" id="L161">            return this.description;</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        } else if (field == Field.LOCATION) {</span>
+<span class="fc" id="L163">            return this.location;</span>
+        } else {
+<span class="fc" id="L165">            throw new IllegalArgumentException(&quot;Invalid field&quot;);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

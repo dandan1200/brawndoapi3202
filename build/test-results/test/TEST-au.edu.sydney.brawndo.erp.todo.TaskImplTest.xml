@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="au.edu.sydney.brawndo.erp.todo.TaskImplTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2023-03-22T06:41:50" hostname="Daniels-MBP.modem" time="0.013">
+  <properties/>
+  <testcase name="testSetLocationNull()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.001"/>
+  <testcase name="testConstructorNullTime()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.001"/>
+  <testcase name="testConstructorNullLocation()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testSetLocationEmpty()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.001"/>
+  <testcase name="testConstructorLargeLocation()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testSetLocationLarge()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.001"/>
+  <testcase name="testSetDateTimeNull()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testConstructorValid()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testGetFieldDescription()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testGetID()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testSetDateTime()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.001"/>
+  <testcase name="testSetDescription()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testGetDateTime()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testSetLocation()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testConstructorIsCompleted()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.001"/>
+  <testcase name="testGetLocation()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testGetFieldInvalid()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.002"/>
+  <testcase name="testCompleted()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testGetFieldLocation()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testCompletedTwice()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testConstructorNullDescription()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <testcase name="testGetDescription()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.001"/>
+  <testcase name="testConstructorEmptyLocation()" classname="au.edu.sydney.brawndo.erp.todo.TaskImplTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

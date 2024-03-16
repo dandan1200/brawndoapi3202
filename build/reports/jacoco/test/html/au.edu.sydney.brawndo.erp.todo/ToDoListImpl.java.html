@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ToDoListImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Workspace</a> &gt; <a href="index.source.html" class="el_package">au.edu.sydney.brawndo.erp.todo</a> &gt; <span class="el_source">ToDoListImpl.java</span></div><h1>ToDoListImpl.java</h1><pre class="source lang-java linenums">package au.edu.sydney.brawndo.erp.todo;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class ToDoListImpl implements ToDoList {
+
+<span class="fc" id="L11">    private int currentID = 0;</span>
+<span class="fc" id="L12">    private boolean listManagingIDs = false;</span>
+<span class="fc" id="L13">    private boolean firstTaskAdded = false;</span>
+<span class="fc" id="L14">    private List&lt;Task&gt; tasks = new ArrayList&lt;Task&gt;();;</span>
+
+<span class="fc" id="L16">    public ToDoListImpl() {</span>
+
+<span class="fc" id="L18">    }</span>
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * If id is null, an integer id is generated which is guaranteed to be unique for this instance of ToDoList if
+     * and only if no set-integer tasks have been added - that is, either manage ids externally or allow the ToDoList
+     * to manage them, do not mix the two&lt;br&gt;
+     * The task added will be available to matching remove and find method calls until it is removed using
+     * ToDoList.remove(matching id) or the list is cleared using ToDoList.clear()&lt;br&gt;
+     *
+     * @param id          The intended id for this task (may be null, may not already be present in the ToDoList)
+     * @param dateTime    may not be null
+     * @param location    may not be null, empty, or longer than 256 characters
+     * @param description Task description (may be null)
+     * @return •	A reference to the created (not completed) Task matching the given parameters
+     * @throws IllegalStateException    If a null id is passed after a non-null id task has already been added
+     * @throws IllegalArgumentException If any other preconditions are violated
+     */
+    public Task add(Integer id, LocalDateTime dateTime, String location, String description) throws IllegalArgumentException, IllegalStateException {
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (!firstTaskAdded) {</span>
+<span class="fc" id="L40">            firstTaskAdded = true;</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (id == null) {</span>
+<span class="fc" id="L42">                listManagingIDs = true;</span>
+            }
+        }
+
+<span class="fc" id="L46">        Task newTask = null;</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (listManagingIDs == true) {</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            if (id != null) {</span>
+<span class="fc" id="L49">                throw new IllegalStateException(&quot;Non-null id added but list is managing IDs.&quot;);</span>
+            } else {
+<span class="fc" id="L51">                newTask = new TaskImpl(this.currentID, dateTime, location, description);</span>
+<span class="fc" id="L52">                this.currentID++;</span>
+<span class="fc" id="L53">                this.tasks.add(newTask);</span>
+            }
+        } else {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            if (id != null) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                if (this.findOne(id) == null) {</span>
+<span class="fc" id="L58">                    newTask = new TaskImpl(id, dateTime, location, description);</span>
+<span class="fc" id="L59">                    this.tasks.add(newTask);</span>
+                } else {
+<span class="fc" id="L61">                    throw new IllegalArgumentException(&quot;Task ID provided already exists in list.&quot;);</span>
+                }
+            } else {
+<span class="fc" id="L64">                throw new IllegalStateException(&quot;Null id added but list is not managing IDs&quot;);</span>
+            }
+        }
+
+<span class="fc" id="L68">        return newTask;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * Any task matching the given id will no longer be available to remove and find methods&lt;br&gt;
+     *
+     * @param id The target task id
+     * @return True if a task with a matching id was present in the list – otherwise false
+     */
+    public boolean remove(int id) {
+<span class="fc" id="L81">        Task foundTask = this.findOne(id);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (foundTask == null) {</span>
+<span class="fc" id="L83">            return false;</span>
+        } else {
+<span class="fc" id="L85">            this.tasks.remove(foundTask);</span>
+<span class="fc" id="L86">            return true;</span>
+        }
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @param id The target task id
+     * @return If a task with a matching id exists in the list, the matching task – otherwise null
+     */
+    public Task findOne(int id) {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        for (Task t : this.tasks) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">            if (t.getID() == id) {</span>
+<span class="fc" id="L102">                return t;</span>
+            }
+<span class="fc" id="L104">        }</span>
+<span class="fc" id="L105">        return null;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @return A list of all tasks contained by this ToDoList (may be empty)
+     * Changes to this list itself will not be reflected in the ToDoList, but changes to the Tasks it contains will be
+     */
+    public List&lt;Task&gt; findAll() {
+<span class="fc" id="L118">        List&lt;Task&gt; tasksCopy = new ArrayList&lt;Task&gt;();</span>
+<span class="fc" id="L119">        tasksCopy.addAll(this.tasks);</span>
+<span class="fc" id="L120">        return tasksCopy;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @param completed The target task completion status
+     * @return A list of all tasks contained by this ToDoList which match the completion status given by the parameter
+     */
+    public List&lt;Task&gt; findAll(boolean completed) {
+<span class="fc" id="L133">        List&lt;Task&gt; tasksCopy = new ArrayList&lt;Task&gt;();</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        for (Task t : this.tasks) {</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">            if (t.isCompleted() == completed) {</span>
+<span class="fc" id="L136">                tasksCopy.add(t);</span>
+            }
+<span class="fc" id="L138">        }</span>
+<span class="fc" id="L139">        return tasksCopy;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * The to parameter must be later in time than the from parameter&lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @param from      The starting boundary (may be null)
+     * @param to        The finishing boundary (may be null)
+     * @param completed The target completion status (may be null)
+     * @return If completed is null, a list of all tasks contained by this ToDoList whose datetime occurs after from
+     * and before to (both exclusive). If either is null their boundary is removed (e.g. if to is null then the method
+     * will return a list of all tasks whose datetime occurs after from). If both are removed this yields the same
+     * list as ToDoList.findAll(). If completed is not null, the yielded list additionally filtered to those tasks
+     * matching the given completion status.
+     * @throws IllegalArgumentException If any of the preconditions are violated
+     */
+    public List&lt;Task&gt; findAll(LocalDateTime from, LocalDateTime to, Boolean completed) throws IllegalArgumentException {
+<span class="fc" id="L159">        List&lt;Task&gt; tasksCopy = new ArrayList&lt;Task&gt;();</span>
+<span class="fc" id="L160">        LocalDateTime fromBoundary = from;</span>
+<span class="fc" id="L161">        LocalDateTime toBoundary = to;</span>
+
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        if (from == null) {</span>
+<span class="fc" id="L164">            fromBoundary = LocalDateTime.MIN;</span>
+        }
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (to == null) {</span>
+<span class="fc" id="L167">            toBoundary = LocalDateTime.MAX;</span>
+        }
+<span class="fc bfc" id="L169" title="All 4 branches covered.">        if (from != null &amp;&amp; to != null) {</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            if (from.isAfter(to)){</span>
+<span class="fc" id="L171">                throw new IllegalArgumentException(&quot;From date is after to date&quot;);</span>
+            }
+        }
+
+        List&lt;Task&gt; listToFilter;
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (completed != null) {</span>
+<span class="fc" id="L177">            listToFilter = this.findAll(completed);</span>
+        } else {
+<span class="fc" id="L179">            listToFilter = this.findAll();</span>
+        }
+
+
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        for (Task t : listToFilter) {</span>
+<span class="fc bfc" id="L184" title="All 4 branches covered.">            if (t.getDateTime().isAfter(fromBoundary) &amp;&amp; t.getDateTime().isBefore(toBoundary)){</span>
+<span class="fc" id="L185">                tasksCopy.add(t);</span>
+            }
+<span class="fc" id="L187">        }</span>
+
+<span class="fc" id="L189">        return tasksCopy;</span>
+
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * The to parameter must be later in time than the from parameter&lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     *
+     * @param params    A map of Task.Fields and values to filter on within those Fields - may be null, but may not
+     *                  contain null values
+     * @param from      The starting boundary (may be null)
+     * @param to        The finishing boundary (may be null)
+     * @param completed The target completion status (may be null)
+     * @param andSearch Sets the filter status to match all if true, match any if false
+     * @return A list of all tasks which match the given filter status based on the following rules:&lt;br&gt;
+     * &lt;ul&gt;
+     *     &lt;li&gt;from and to filter on dateTime as exclusive boundaries - if either is null their side of the boundary
+     *     is opened, if both are null does not filter on dateTime&lt;/li&gt;
+     *     &lt;li&gt;completed filters on matching completion status if not null&lt;/li&gt;
+     *     &lt;li&gt;params filters to the matching Task.Field and mapped value (contained string, not equality)&lt;/li&gt;
+     *     &lt;li&gt;If andSearch is true this requires ALL above filters to match for all returned Tasks. If andSearch
+     *     is false any task matching any given filter will be included&lt;/li&gt;
+     * &lt;/ul&gt;
+     * @throws IllegalArgumentException If any of the preconditions are violated
+     */
+    public List&lt;Task&gt; findAll(Map&lt;Task.Field, String&gt; params, LocalDateTime from, LocalDateTime to, Boolean completed, boolean andSearch) throws IllegalArgumentException {
+<span class="fc" id="L217">        List&lt;Task&gt; tasksCopy = new ArrayList&lt;Task&gt;();</span>
+<span class="fc" id="L218">        List&lt;Task&gt; date_completeFilter = findAll(from,to,completed);</span>
+
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        if (andSearch) {</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">            for (Task t : date_completeFilter) {</span>
+<span class="fc" id="L222">                boolean meetsParams = true;</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">                if (params != null) {</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">                    for (Map.Entry&lt;Task.Field, String&gt; e : params.entrySet()) {</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">                        if (!t.getField(e.getKey()).contains(e.getValue())) {</span>
+<span class="fc" id="L226">                            meetsParams = false;</span>
+                        }
+<span class="fc" id="L228">                    }</span>
+                }
+<span class="fc bfc" id="L230" title="All 2 branches covered.">                if (meetsParams) {</span>
+<span class="fc" id="L231">                    tasksCopy.add(t);</span>
+                }
+<span class="fc" id="L233">            }</span>
+        } else {
+<span class="fc" id="L235">            tasksCopy.addAll(date_completeFilter);</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">            for (Task t : this.tasks) {</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">                if (!tasksCopy.contains(t)) {</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">                    if (params != null) {</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">                        for (Map.Entry&lt;Task.Field, String&gt; e : params.entrySet()) {</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">                            if (t.getField(e.getKey()).contains(e.getValue())) {</span>
+<span class="fc" id="L241">                                tasksCopy.add(t);</span>
+<span class="fc" id="L242">                                break;</span>
+                            }
+<span class="fc" id="L244">                        }</span>
+                    }
+                }
+<span class="fc" id="L247">            }</span>
+        }
+<span class="fc" id="L249">        return tasksCopy;</span>
+    }
+
+    /**
+     * &lt;b&gt;Preconditions:&lt;/b&gt;&lt;br&gt;
+     * &lt;br&gt;
+     * &lt;b&gt;Postconditions:&lt;/b&gt;&lt;br&gt;
+     * All tasks in the ToDoList will be removed and no longer available to matching remove and find methods&lt;br&gt;
+     */
+    public void clear() {
+<span class="fc" id="L259">        this.tasks.clear();</span>
+<span class="fc" id="L260">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
